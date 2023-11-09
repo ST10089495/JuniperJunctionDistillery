@@ -14277,3 +14277,7 @@ select.form-control {
         display: block; /* Make the button a block-level element */
         margin: 0 auto; /* Center the button horizontally */
     }
+
+.navbar-nav li {
+    margin-right: 8px; /* Adjust the value to your desired spacing */
+}
