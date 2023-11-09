@@ -1,0 +1,62 @@
+﻿@page
+@model IEnumerable<JuniperJunctionDistillery.Models.Stock>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Products</h2>
+
+<div class="container">
+    <div id="message"></div>
+    <div class="row mt-2 pb-3">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3 mb-2">
+                    <div class="card-deck">
+                        <div class="card p-2 border-secondary mb-2">
+                            @if (item != null)
+                            {
+                                <img src="img/@(item.ID + ".jpeg")" class="card-img-top" height="250">
+                                <div class="card-body p-1">
+                                    <h4 class="card-title text-center text-info">@Html.DisplayFor(modelitem => item.Name)</h4>
+                                    <h5 class="card-text text-center text-danger"><i class="fa-sharp fa-solid fa-r fa-sm"></i>&nbsp;&nbsp;R @Html.DisplayFor(modelItem => item.Price)</h5>
+                                </div>
+                                <div class="card-footer p-1">
+                                    <form action="" class="form-submit">
+                                        <div class="row p-2">
+                                            <div class="col-md-6 py-1 pl-4">
+                                                <b>Quantity Available : </b>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="number" class="form-control pqty" value="@Html.DisplayFor(modelItem => item.Quantity)">
+                                            </div>
+                                        </div>
+                                        <input type="hidden" class="pid" value="@Html.DisplayFor(modelItem => item.ID)">
+                                        <input type="hidden" class="pname" value="@Html.DisplayFor(modelIteml => item.Name)">
+                                        <input type="hidden" class="pprice" value="@Html.DisplayFor(modelItem => item.Price)">
+                                        <input type="hidden" class="pimage" value="img/Ancient Alchemy Gin.jpeg">
+                                        <input type="hidden" class="pdescrip" value="@Html.DisplayFor(modelItem => item.Description)">
+                                        <button class="btn btn-info btn-block addItemBtn">
+                                            <i class="fas fa-cart-plus"></i>&nbsp;&nbsp;Add to cart
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>Item is null</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Model is null</p>
+        }
+    </div>
+</div>
