@@ -98,10 +98,44 @@ namespace JuniperJunctionDistillery.Controllers
         //Registration
         public IActionResult Registration()
         {
-            var model = new LoginModel();
-            return View(model);
+            //var model = new LoginModel();
+            return View();
         }
+        //Registration functionality
+        [HttpPost]
+        public async Task<IActionResult> Registration(LoginModel loginModel)
+        {
+            try
+            {
+                //create the user
+                await auth.CreateUserWithEmailAndPasswordAsync(loginModel.Email, loginModel.Password);
+                //log in the new user
+                var fbAuthLink = await auth
+                                .SignInWithEmailAndPasswordAsync(loginModel.Email, loginModel.Password);
+                string token = fbAuthLink.FirebaseToken;
+                //saving the token in a session variable
+                if (token != null)
+                {
+                    HttpContext.Session.SetString("_UserToken", token);
 
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (FirebaseAuthException ex)
+            {
+                var firebaseEx = JsonConvert.DeserializeObject<FirebaseError>(ex.ResponseData);
+                ModelState.AddModelError(String.Empty, firebaseEx.error.message);
+                return View(loginModel);
+            }
+
+            return View();
+        }
+        //Sign In
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+        //Sign In Functionality
         [HttpPost]
         public async Task<IActionResult> SignIn(LoginModel loginModel)
         {
