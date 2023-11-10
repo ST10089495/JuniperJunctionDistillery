@@ -3,15 +3,18 @@
 @{
     ViewBag.Title = "Bookings";
 }
+
+
 <section class="ftco-section testimony-section img" style="background-image: url(images/bg_4.jpg);">
     	<div class="overlay"></div>
       <div class="container">
      
       </div>
     </section>
-<div class="form-container">
+
 <h2>Book Gin Experience</h2>
 
+<div class="form-container">
 @using (Html.BeginForm("Bookingsform", "Bookings", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
